@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Enterprise FDE Academy</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#18233a;--line:#293650;--text:#eef3ff;--muted:#a8b5cc;--accent:#d98b5f;--cyan:#68d5d0;--purple:#a99aff;--green:#85d6a4;--yellow:#f2ca77}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 0%,#26304b 0,#0b1020 36%);color:var(--text);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1240px;margin:auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:#0b1020eF;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}.top{height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;gap:12px;align-items:center;font-weight:800;letter-spacing:.2px}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#f1c59b);display:grid;place-items:center;color:#17121a;font-weight:900}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:1.5px}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{font-size:12px;color:var(--muted);padding:7px 9px;border-radius:8px}.nav a:hover{background:var(--panel2);color:white}
+.hero{padding:70px 0 42px;display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:center}.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(36px,5vw,60px);line-height:1.04;letter-spacing:-2px;margin:14px 0}.hero h1 span{color:var(--accent)}.hero p{font-size:17px;color:var(--muted);max-width:760px}.hero-card,.card,.panel{background:linear-gradient(145deg,#17233a,#10182a);border:1px solid var(--line);border-radius:18px}.hero-card{padding:24px}.hero-card h3{margin:0 0 12px}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#0c1425;border:1px solid var(--line);padding:14px;border-radius:12px}.stat b{display:block;font-size:22px;color:var(--cyan)}.stat small{color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.pill{font-size:12px;border:1px solid var(--line);padding:6px 10px;border-radius:99px;color:#d6e1f5;background:#111b2e}
+section{padding:34px 0;scroll-margin-top:88px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:18px}.section-head h2{font-size:27px;margin:0;letter-spacing:-.6px}.section-head p{margin:4px 0 0;color:var(--muted)}.kicker{font-size:11px;color:var(--accent);font-weight:800;letter-spacing:1.5px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid.two{grid-template-columns:repeat(2,1fr)}.card{padding:20px}.card h3{margin:5px 0 8px;font-size:17px}.card p,.card li{color:var(--muted);font-size:13px}.card ul{padding-left:18px}.icon{font-size:22px}.tag{display:inline-block;border:1px solid #3a4a65;color:var(--cyan);padding:3px 8px;border-radius:6px;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase}.muted{color:var(--muted)}.accent{color:var(--accent)}.cyan{color:var(--cyan)}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:18px 0}.step{background:#121d31;border:1px solid var(--line);border-radius:12px;padding:14px 10px;text-align:center}.step b{display:block;font-size:13px}.step small{color:var(--muted);font-size:11px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.tab{border:1px solid var(--line);background:#111a2c;color:var(--muted);padding:9px 13px;border-radius:9px;cursor:pointer}.tab.active{background:#35405a;color:white;border-color:var(--accent)}.tabcontent{display:none}.tabcontent.active{display:block}
+.arch{background:#0a1323;border:1px solid var(--line);border-radius:16px;padding:20px;overflow:auto}.archrow{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:9px 0}.node{border:1px solid #435674;background:#17253c;border-radius:10px;padding:10px 14px;text-align:center;min-width:125px;font-size:12px}.node strong{display:block;color:var(--cyan)}.down{text-align:center;color:var(--accent);font-size:20px;line-height:1}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--cyan);font-size:11px;text-transform:uppercase;letter-spacing:.8px}td{color:var(--muted)}
+details{background:#111a2b;border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin:9px 0}summary{cursor:pointer;font-weight:700}details p,details li{color:var(--muted);font-size:13px}
+pre{background:#080f1c;border:1px solid #263650;border-radius:12px;padding:16px;overflow:auto;color:#c9e7e3;font-size:12px;line-height:1.55}.btn{background:var(--accent);color:#1a1720;border:0;border-radius:9px;padding:10px 14px;font-weight:800;cursor:pointer}.btn.secondary{background:#26344d;color:var(--text);border:1px solid var(--line)}.checklist label{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #25334b;color:var(--muted);font-size:13px}.checklist input{accent-color:var(--cyan)}.progress{height:9px;background:#26334a;border-radius:99px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--accent));width:0}
+.quizq{padding:16px;background:#111a2b;border:1px solid var(--line);border-radius:12px;margin:12px 0}.quizq label{display:block;color:var(--muted);padding:5px;font-size:13px;cursor:pointer}.feedback{font-size:13px;margin-top:8px}.resource{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.resource span{color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:12px;margin-top:30px}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:42px}.grid{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(3,1fr)}.nav{display:none}}
+@media(max-width:560px){.grid,.grid.two{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,1fr)}.wrap{padding:0 16px}.hero h1{letter-spacing:-1px}.section-head{display:block}}
+</style>
+</head>
+<body>
+<header><div class="wrap top"><div class="brand"><div class="logo">CF</div><div>CLAUDE FDE ACADEMY<small>ENTERPRISE IMPLEMENTATION LAB</small></div></div><nav class="nav"><a href="#role">Role</a><a href="#lifecycle">Lifecycle</a><a href="#architecture">Architecture</a><a href="#stack">Tech Stack Tools</a><a href="#optimization">Optimization</a><a href="#usecases">Agent Use Cases</a><a href="#skills">Skills</a><a href="#labs">Labs</a><a href="#governance">Governance</a><a href="#roadmap">Roadmap</a><a href="#jobs">Job portal</a><a href="#learning">Learning resources</a><a href="#quiz">Quiz</a></nav></div></header>
+<main class="wrap">
+<div class="hero">
+<div><div class="eyebrow">Field engineering • Enterprise Claude • Applied AI</div><h1>Take Claude from <span>prototype to production.</span></h1><p>A practical academy for Forward Deployed Engineers implementing Claude across real enterprise workflows—connecting business outcomes, data, agents, APIs, security, deployment and adoption.</p><div class="pills"><span class="pill">Claude Enterprise</span><span class="pill">Claude API</span><span class="pill">Claude Code</span><span class="pill">MCP</span><span class="pill">Agents & workflows</span><span class="pill">Security & governance</span></div></div>
+<div class="hero-card"><div class="kicker">THE FDE MISSION</div><h3>Own the path from problem to measurable outcome.</h3><div class="statgrid"><div class="stat"><b>01</b><small>Discover the workflow</small></div><div class="stat"><b>02</b><small>Design the solution</small></div><div class="stat"><b>03</b><small>Deploy securely</small></div><div class="stat"><b>04</b><small>Prove business value</small></div></div><p class="muted">The goal is not simply to make a Claude demo. It is to make an enterprise capability reliable, governed, adopted and supportable.</p></div>
+</div>
+<section id="role"><div class="section-head"><div><div class="kicker">01 / ROLE DEFINITION</div><h2>What does a Claude FDE do?</h2><p>A hybrid of engineer, architect, consultant and product-minded operator.</p></div></div>
+<div class="grid">
+<div class="card"><div class="icon">🔎</div><h3>Customer discovery</h3><p>Shadow users, map workflows, identify bottlenecks, quantify current-state cost and define the desired outcome.</p><ul><li>Stakeholder interviews</li><li>Workflow and data mapping</li><li>Use-case prioritization</li></ul></div>
+<div class="card"><div class="icon">🧩</div><h3>Solution architecture</h3><p>Select the right Claude surface, model, tools, context strategy and integration pattern.</p><ul><li>Claude Enterprise vs API</li><li>RAG, MCP and agents</li><li>Cloud and network design</li></ul></div>
+<div class="card"><div class="icon">🛠️</div><h3>Hands-on implementation</h3><p>Build connectors, services, tools, prompts, skills, evaluations and deployment automation.</p><ul><li>Python / TypeScript</li><li>APIs and MCP servers</li><li>CI/CD and observability</li></ul></div>
+<div class="card"><div class="icon">🛡️</div><h3>Enterprise readiness</h3><p>Work with security, legal, privacy and IT to make the implementation safe and supportable.</p><ul><li>SSO, RBAC and secrets</li><li>Data controls and audit</li><li>Threat modeling and approvals</li></ul></div>
+<div class="card"><div class="icon">📈</div><h3>Adoption and value</h3><p>Train teams, instrument usage, measure task completion and continuously improve.</p><ul><li>Change management</li><li>KPIs and cost per task</li><li>Feedback and iteration</li></ul></div>
+<div class="card"><div class="icon">🚨</div><h3>Production ownership</h3><p>Debug real incidents, manage fallbacks, tune performance and communicate clearly under pressure.</p><ul><li>Tracing and monitoring</li><li>Retries and rollback</li><li>Incident response</li></ul></div>
+</div></section>
+<section id="lifecycle"><div class="section-head"><div><div class="kicker">02 / DELIVERY MODEL</div><h2>The enterprise FDE lifecycle</h2><p>Use this repeatable operating model for every customer engagement.</p></div></div>
+<div class="flow"><div class="step"><b>01 Discover</b><small>Problem + baseline</small></div><div class="step"><b>02 Design</b><small>Architecture + controls</small></div><div class="step"><b>03 Build</b><small>Integrations + agents</small></div><div class="step"><b>04 Evaluate</b><small>Quality + safety</small></div><div class="step"><b>05 Deploy</b><small>Release + operations</small></div><div class="step"><b>06 Optimize</b><small>Adoption + ROI</small></div></div>
+<div class="grid two">
+<div class="card"><h3>Discovery deliverables</h3><ul><li>Problem statement and user personas</li><li>Current-state workflow and system context</li><li>Data classification and source inventory</li><li>Baseline metrics: time, cost, quality, volume</li><li>Prioritized use cases and MVP definition</li></ul></div>
+<div class="card"><h3>Production handoff deliverables</h3><ul><li>Architecture and data-flow diagrams</li><li>Threat model and access matrix</li><li>Versioned prompts, tools and evaluation set</li><li>Runbooks, dashboards and alert thresholds</li><li>Adoption plan, owner and value scorecard</li></ul></div>
+</div></section>
+<section id="architecture"><div class="section-head"><div><div class="kicker">03 / REFERENCE ARCHITECTURE</div><h2>Claude enterprise implementation blueprint</h2><p>A composable pattern—not a one-size-fits-all design.</p></div></div>
+<div class="arch">
+<div class="archrow"><div class="node"><strong>Employees / Customers</strong>Web • Slack • CRM • Service portal</div></div><div class="down">↓</div>
+<div class="archrow"><div class="node"><strong>Experience layer</strong>Chat UI • Claude Code • Cowork • Custom app</div></div><div class="down">↓</div>
+<div class="archrow"><div class="node"><strong>Identity & policy</strong>SSO • OAuth • RBAC • Tenant context</div><div class="node"><strong>API gateway</strong>Rate limits • WAF • Routing</div></div><div class="down">↓</div>
+<div class="archrow"><div class="node"><strong>Application / orchestration</strong>FastAPI • TypeScript • Workflow engine</div></div><div class="down">↓</div>
+<div class="archrow"><div class="node"><strong>Claude model layer</strong>Anthropic API • Amazon Bedrock • Vertex AI • Microsoft Foundry*</div><div class="node"><strong>Agent runtime</strong>Tool use • State • Guardrails • Approvals</div></div><div class="down">↓</div>
+<div class="archrow"><div class="node"><strong>MCP / tool gateway</strong>Scoped tools • Validation • Audit</div><div class="node"><strong>Knowledge / RAG</strong>Search • Vector DB • ACL filters</div><div class="node"><strong>Enterprise APIs</strong>Salesforce • SAP • ServiceNow • ERP</div></div><div class="down">↓</div>
+<div class="archrow"><div class="node"><strong>Data systems</strong>CRM • ERP • Docs • Data lake • Knowledge base</div></div><div class="down">↓</div>
+<div class="archrow"><div class="node"><strong>Cross-cutting controls</strong>Evaluation • Observability • DLP • Audit • Cost • Incident response</div></div>
+<p class="muted" style="font-size:11px">*Provider and feature availability depend on current product support, region, contract and organization configuration. Choose the deployment path only after security and procurement review.</p>
+</div>
+<div class="tabs"><button class="tab active" data-tab="deploy1">Deployment choices</button><button class="tab" data-tab="deploy2">Integration patterns</button><button class="tab" data-tab="deploy3">Build vs configure</button></div>
+<div id="deploy1" class="tabcontent active card"><table><tr><th>Path</th><th>Use when</th><th>FDE considerations</th></tr><tr><td>Claude Enterprise</td><td>Employees need governed access to Claude products.</td><td>Identity, seats, connectors, policies, adoption and admin operations.</td></tr><tr><td>Claude API</td><td>You are embedding Claude into a product or workflow.</td><td>Application architecture, auth, quotas, evaluations, cost and runtime ownership.</td></tr><tr><td>Cloud model platform</td><td>Cloud procurement, IAM, network or data controls favor a cloud provider.</td><td>Validate model availability, feature parity, region, logging, quotas and contractual terms.</td></tr></table></div>
+<div id="deploy2" class="tabcontent card"><table><tr><th>Pattern</th><th>Example</th><th>Design note</th></tr><tr><td>Direct API</td><td>Summarize a case or draft a response.</td><td>Best for bounded tasks with deterministic application control.</td></tr><tr><td>RAG</td><td>Answer policy questions from approved documents.</td><td>Enforce document ACLs at retrieval time; cite source evidence.</td></tr><tr><td>MCP tools</td><td>Read CRM account, create a draft case.</td><td>Use narrow schemas, least privilege, validation and explicit approvals.</td></tr><tr><td>Agentic workflow</td><td>Investigate a service issue across multiple systems.</td><td>Bound steps, time, retries and tool permissions; keep human takeover.</td></tr></table></div>
+<div id="deploy3" class="tabcontent card"><table><tr><th>Configure</th><th>Build custom</th></tr><tr><td>Claude organization settings, connectors, project instructions, skills and managed policies.</td><td>Custom app, API service, MCP server, retrieval service, orchestration, evaluation pipeline and domain integrations.</td></tr><tr><td>Prefer when standard product capability meets requirements.</td><td>Prefer when differentiated workflow, system integration or control requirements justify ownership.</td></tr></table></div>
+</section>
+
+<section id="stack"><div class="section-head"><div><div class="kicker">04 / END-TO-END ENGINEERING TOOLCHAIN</div><h2>Tech Stack Tools</h2><p>A layer-by-layer reference catalog for building, deploying, securing and operating enterprise AI systems with Claude. Treat this as a selection map—not a requirement to use every tool.</p></div></div>
+<div class="callout"><strong>FDE principle:</strong> Select the smallest reliable stack that satisfies the customer’s security, data-residency, latency, scale, integration and operating-model requirements. Standardize interfaces and telemetry so individual tools can be replaced.</div>
+<div class="grid">
+<div class="card"><span class="tag">01 • Claude products & model layer</span><h3>Anthropic / Claude stack</h3><ul>
+<li><b>Claude models:</b> Opus, Sonnet and Haiku model families—select by reasoning depth, latency, throughput and cost.</li>
+<li><b>Claude app / Claude Enterprise:</b> employee-facing assistant, enterprise controls, connectors and knowledge workflows.</li>
+<li><b>Claude Platform / Messages API:</b> embed Claude in products and enterprise applications.</li>
+<li><b>Claude Console / Workbench:</b> API keys, prompt experimentation, usage and development workflows.</li>
+<li><b>Claude Code:</b> agentic coding in terminal and supported IDE workflows; codebase exploration, implementation, tests and refactoring.</li>
+<li><b>Claude Cowork:</b> knowledge-work workflows across files and connected tools.</li>
+<li><b>Claude Agent SDK:</b> build custom agent loops and tool-enabled workflows in your own runtime.</li>
+<li><b>Claude Managed Agents:</b> hosted agent runtime and operational capabilities where available.</li>
+<li><b>Platform capabilities:</b> tool use, structured outputs, streaming, citations, prompt caching, batch processing, Files API, code execution, browser/computer use, context management, Skills and MCP connector.</li>
+</ul><p class="muted">Start with the official <a href="https://platform.claude.com/docs/" target="_blank" rel="noopener">Claude Platform docs</a>, <a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code docs</a> and <a href="https://claude.com/platform/api" target="_blank" rel="noopener">Claude Platform overview</a>.</p></div>
+<div class="card"><span class="tag">02 • Developer workstation & source control</span><h3>Build, collaborate & version</h3><ul>
+<li><b>Languages:</b> Python, TypeScript / JavaScript, Java, C#, Go and SQL.</li>
+<li><b>Editors:</b> VS Code, Cursor, JetBrains IDEs; terminal, shell and Jupyter notebooks.</li>
+<li><b>Git:</b> GitHub, GitLab, Bitbucket or Azure Repos; branches, pull requests, reviews, tags and release strategies.</li>
+<li><b>Claude developer workflow:</b> Claude Code, CLAUDE.md project guidance, Skills, hooks, subagents and plugins.</li>
+<li><b>Build tools:</b> uv / Poetry / pip, npm / pnpm, Maven / Gradle, Make and task runners.</li>
+<li><b>Quality:</b> pytest, unittest, Jest, Vitest, Playwright, Cypress, Postman and contract testing.</li>
+<li><b>Local environments:</b> Docker Desktop, Dev Containers, Compose, local emulators and test fixtures.</li>
+</ul><p class="muted">Deliverable: a reproducible repository with README, architecture decision records, environment setup, tests, CODEOWNERS and contribution rules.</p></div>
+<div class="card"><span class="tag">03 • Application & API layer</span><h3>Services, gateways & integration</h3><ul>
+<li><b>Python:</b> FastAPI, Flask, Django, Pydantic, SQLAlchemy and Celery.</li>
+<li><b>TypeScript:</b> Node.js, Express, NestJS, Next.js and serverless functions.</li>
+<li><b>API contracts:</b> REST, GraphQL, OpenAPI, AsyncAPI, gRPC and webhooks.</li>
+<li><b>API management:</b> AWS API Gateway, Apigee, Azure API Management, Kong and NGINX.</li>
+<li><b>Enterprise integration:</b> MuleSoft, Workato, Boomi, Salesforce APIs, SAP APIs and custom adapters.</li>
+<li><b>Async & eventing:</b> Kafka, Amazon EventBridge, SQS / SNS, Google Pub/Sub, Azure Service Bus and RabbitMQ.</li>
+<li><b>Resilience:</b> retries with backoff, idempotency keys, circuit breakers, rate limits, queues and dead-letter handling.</li>
+</ul><p class="muted">Keep model calls behind a service boundary. Separate business logic, tool adapters, policy checks and user-interface concerns.</p></div>
+<div class="card"><span class="tag">04 • Cloud & runtime infrastructure</span><h3>AWS, GCP, Azure & platform engineering</h3><ul>
+<li><b>AWS:</b> IAM, VPC, ECS / EKS, Lambda, Bedrock, S3, RDS / Aurora, DynamoDB, OpenSearch, SQS, Secrets Manager, KMS, CloudWatch and CloudTrail.</li>
+<li><b>Google Cloud:</b> IAM, Cloud Run, GKE, Vertex AI, Cloud Storage, Cloud SQL, BigQuery, Pub/Sub, Secret Manager, Cloud Logging and Cloud Trace.</li>
+<li><b>Azure:</b> Entra ID, Azure AI Foundry, Azure OpenAI where applicable, Container Apps, AKS, Functions, Blob Storage, Cosmos DB, Key Vault, Monitor and Application Insights.</li>
+<li><b>Claude hosting paths:</b> Anthropic Claude Platform API; Claude via Amazon Bedrock; Claude on Google Cloud / Vertex AI; Microsoft Foundry availability and feature parity should be checked before choosing.</li>
+<li><b>Containers & orchestration:</b> Docker, Kubernetes, Helm, ECS, EKS, GKE and AKS.</li>
+<li><b>Infrastructure as code:</b> Terraform, OpenTofu, AWS CDK, CloudFormation, Pulumi and Bicep.</li>
+<li><b>Edge / delivery:</b> CloudFront, Cloud CDN, Azure Front Door, WAF and load balancers.</li>
+</ul><p class="muted">Do not assume identical model availability, features, quotas, data handling or release timing across direct API and cloud-provider deployments. Validate the chosen route against current vendor documentation.</p></div>
+<div class="card"><span class="tag">05 • Data engineering & knowledge layer</span><h3>Data stores, ingestion & governance</h3><ul>
+<li><b>Operational databases:</b> PostgreSQL, MySQL, SQL Server, Oracle, Aurora and Cloud SQL.</li>
+<li><b>NoSQL / cache:</b> DynamoDB, MongoDB, Cosmos DB, Redis and Firestore.</li>
+<li><b>Object & lake storage:</b> S3, Google Cloud Storage, Azure Blob / ADLS; Parquet and Delta Lake.</li>
+<li><b>Warehouses / lakehouses:</b> Snowflake, Databricks, BigQuery, Redshift, Microsoft Fabric and Synapse.</li>
+<li><b>Ingestion / ELT:</b> Airbyte, Fivetran, dbt, AWS Glue, Dataflow, Databricks Workflows and Apache Airflow.</li>
+<li><b>Search:</b> Elasticsearch, OpenSearch, Azure AI Search, Google Vertex AI Search and managed enterprise search.</li>
+<li><b>Governance:</b> data catalog, lineage, classification, retention, consent, access policies and data quality checks.</li>
+</ul><p class="muted">Design for source ownership, freshness, incremental refresh, deletion propagation, metadata, permissions and auditable lineage.</p></div>
+<div class="card"><span class="tag">06 • RAG & retrieval layer</span><h3>Retrieval-augmented generation</h3><ul>
+<li><b>Ingestion:</b> Unstructured, LlamaParse, Apache Tika, PyMuPDF, OCR / Textract / Document AI and custom connectors.</li>
+<li><b>Chunking:</b> semantic, recursive, structure-aware, parent-child and sliding-window chunking.</li>
+<li><b>Embeddings:</b> Anthropic-compatible embedding integrations via external embedding providers; OpenAI, Cohere, Voyage AI and open-source sentence-transformers models.</li>
+<li><b>Vector stores:</b> pgvector, Pinecone, Weaviate, Qdrant, Milvus, Chroma and FAISS.</li>
+<li><b>Hybrid retrieval:</b> BM25 / keyword search + vector similarity; metadata filters, ACL filters and query expansion.</li>
+<li><b>Reranking:</b> Cohere Rerank, cross-encoder models and provider-native rerankers.</li>
+<li><b>Frameworks:</b> LlamaIndex, LangChain, Haystack, Semantic Kernel and custom retrieval services.</li>
+<li><b>Evaluation:</b> RAGAS, DeepEval, TruLens, Phoenix evaluations and curated golden question sets.</li>
+</ul><p class="muted">RAG is a system, not a vector database. Measure recall, precision, groundedness, citation correctness, freshness and permission leakage.</p></div>
+<div class="card"><span class="tag">07 • Agents, orchestration & MCP</span><h3>Tool-connected intelligence</h3><ul>
+<li><b>Anthropic-native:</b> Claude tool use, Claude Agent SDK, Claude Managed Agents, Skills, MCP connector, computer / browser use and tool execution.</li>
+<li><b>MCP:</b> Model Context Protocol clients and servers; tools, resources, prompts, transports, authorization, scopes and consent.</li>
+<li><b>Agent frameworks:</b> LangGraph, LlamaIndex workflows, Semantic Kernel, AutoGen, CrewAI and custom state machines.</li>
+<li><b>Enterprise action tools:</b> Salesforce, ServiceNow, Jira, GitHub, Slack, Microsoft 365, databases and internal APIs via governed connectors.</li>
+<li><b>Workflow engines:</b> Temporal, n8n, Prefect, Airflow, Step Functions, Durable Functions and Google Workflows.</li>
+<li><b>Agent patterns:</b> router, planner-executor, supervisor-worker, human approval, handoff, deterministic workflow and bounded autonomy.</li>
+<li><b>Control plane:</b> tool allowlists, least privilege, scoped credentials, approval gates, budgets, timeouts and termination criteria.</li>
+</ul><p class="muted">Use MCP as an integration protocol—not as an authorization strategy. The server and downstream system must still enforce identity, authorization and audit.</p></div>
+<div class="card"><span class="tag">08 • CI/CD, release & DevSecOps</span><h3>Automate the path to production</h3><ul>
+<li><b>CI/CD:</b> GitHub Actions, GitLab CI, Jenkins, Azure DevOps and AWS CodePipeline / CodeBuild.</li>
+<li><b>GitOps / deploy:</b> Argo CD, Flux, Helm, Terraform plans and environment promotion.</li>
+<li><b>Artifact registries:</b> GitHub Container Registry, Amazon ECR, Google Artifact Registry, Azure Container Registry and JFrog Artifactory.</li>
+<li><b>Quality gates:</b> unit / integration / end-to-end tests, API contract tests, linting, type checks, security scans and AI evaluation thresholds.</li>
+<li><b>Supply-chain security:</b> Dependabot, Renovate, Snyk, Trivy, Semgrep, CodeQL, SBOM and signed artifacts.</li>
+<li><b>Release safety:</b> dev → test → staging → production, feature flags, canary releases, blue-green deployment and rollback.</li>
+<li><b>Prompt / agent releases:</b> version prompts, Skills, MCP servers, model configuration, evaluation datasets and tool schemas alongside application code.</li>
+</ul><p class="muted">A release is not complete until tests, evals, policy checks, observability, rollback and ownership are in place.</p></div>
+<div class="card"><span class="tag">09 • Observability, tracing & traceability</span><h3>See every request and agent action</h3><ul>
+<li><b>OpenTelemetry:</b> traces, metrics, logs, semantic conventions, context propagation and collector pipelines.</li>
+<li><b>LLM / agent observability:</b> Langfuse, Arize Phoenix, LangSmith, Helicone, Weights & Biases Weave and Braintrust.</li>
+<li><b>Cloud-native:</b> AWS CloudWatch / X-Ray, Google Cloud Logging / Monitoring / Trace, Azure Monitor / Application Insights.</li>
+<li><b>Platform monitoring:</b> Datadog, Grafana, Prometheus, Loki, Tempo, Elastic Observability, Splunk and New Relic.</li>
+<li><b>Trace dimensions:</b> user / tenant, request ID, session, model and version, prompt version, tool name, MCP server, retrieval IDs, latency, token usage and cost.</li>
+<li><b>Evaluation traces:</b> input / output quality, tool success, retrieval relevance, groundedness, refusal, policy violations and human feedback.</li>
+<li><b>Business traceability:</b> source document IDs, citation spans, CRM record IDs, workflow / case IDs, approval identity and resulting system changes.</li>
+<li><b>Privacy:</b> redact secrets and sensitive payloads; apply retention limits, access controls and sampling policies.</li>
+</ul><p class="muted">Trace the full path: user request → application → Claude → retrieval → MCP / tool → downstream system → response. Avoid logging raw sensitive content by default.</p></div>
+<div class="card"><span class="tag">10 • Security, identity & governance</span><h3>Enterprise guardrails</h3><ul>
+<li><b>Identity:</b> Okta, Microsoft Entra ID, AWS IAM, Google Cloud IAM, SAML, OIDC, OAuth 2.0 and SCIM.</li>
+<li><b>Secrets & keys:</b> AWS Secrets Manager, GCP Secret Manager, Azure Key Vault, HashiCorp Vault and KMS / HSM.</li>
+<li><b>Policy:</b> OPA / Gatekeeper, Cedar, IAM policies, RBAC, ABAC, tenant isolation and row-level / document-level ACLs.</li>
+<li><b>App security:</b> OWASP ASVS, OWASP Top 10 for LLM Applications, threat modeling, input validation, output encoding and SSRF protections.</li>
+<li><b>AI-specific controls:</b> prompt-injection defenses, tool permission boundaries, untrusted-content isolation, data exfiltration controls and human approval for high-impact actions.</li>
+<li><b>Governance:</b> model inventory, use-case risk tiering, DPIA / privacy review, audit evidence, retention, residency and vendor risk review.</li>
+<li><b>Testing:</b> Garak, Promptfoo, PyRIT, custom red-team suites and adversarial test cases.</li>
+</ul><p class="muted">Security is enforced at the application, model-tool boundary, MCP server and target system—not by the system prompt alone.</p></div>
+<div class="card"><span class="tag">11 • Quality, evaluation & performance</span><h3>Prove the system works</h3><ul>
+<li><b>Unit / integration:</b> pytest, Jest, Postman / Newman, Pact and Playwright.</li>
+<li><b>Prompt / agent evals:</b> Anthropic evaluation tooling and cookbooks, Promptfoo, Braintrust, LangSmith and custom harnesses.</li>
+<li><b>RAG evaluation:</b> RAGAS, DeepEval, TruLens and human-graded golden sets.</li>
+<li><b>Load / reliability:</b> k6, Locust, JMeter, Artillery, chaos testing and fault injection.</li>
+<li><b>Metrics:</b> task success, groundedness, citation accuracy, tool-call success, escalation rate, latency percentiles, cost per task and user adoption.</li>
+<li><b>Optimization:</b> prompt caching, model routing, batching, context pruning, retrieval tuning, concurrency controls and response streaming.</li>
+<li><b>Human feedback:</b> reviewer queues, acceptance / correction labels, incident feedback and continuous regression datasets.</li>
+</ul><p class="muted">Use deterministic tests for deterministic behavior and rubric-based / model-assisted evaluation for open-ended quality. Always sample human review.</p></div>
+<div class="card"><span class="tag">12 • FinOps & operational support</span><h3>Cost, reliability & support</h3><ul>
+<li><b>Cloud cost:</b> AWS Cost Explorer, Google Cloud Billing, Azure Cost Management, Kubecost and OpenCost.</li>
+<li><b>AI cost:</b> token and request metering, per-tenant budgets, model selection, caching, batch processing and cost-per-outcome reporting.</li>
+<li><b>Reliability:</b> SLOs / SLIs, error budgets, health checks, rate-limit handling, circuit breakers and graceful degradation.</li>
+<li><b>Incident management:</b> PagerDuty, Opsgenie, ServiceNow, Jira Service Management and runbooks.</li>
+<li><b>Support knowledge:</b> versioned runbooks, known-error catalog, escalation paths, customer-facing status and post-incident reviews.</li>
+<li><b>Product analytics:</b> Amplitude, Pendo, PostHog, Mixpanel and application telemetry.</li>
+</ul><p class="muted">Track cost per successful business task—not only cost per token or API call.</p></div>
+</div>
+<div class="card" style="margin-top:14px"><span class="tag">Reference implementation patterns</span><h3>Three practical stack profiles</h3>
+<div class="grid three">
+<div><h4>Lean pilot</h4><p>Claude API + Python / FastAPI + GitHub + PostgreSQL / pgvector + one MCP server + Docker + GitHub Actions + OpenTelemetry + basic cloud logging.</p></div>
+<div><h4>Enterprise production</h4><p>Claude API or approved cloud route + API gateway + managed identity + private networking + governed RAG + MCP gateway / servers + Kubernetes or managed containers + CI/CD + centralized traces / SIEM + evaluation gates.</p></div>
+<div><h4>Regulated / high-control</h4><p>Approved model deployment route + private data plane + strong tenant and document ACLs + secrets vault + immutable audit + policy-as-code + human approval + red-team testing + strict retention / residency + SLO and incident controls.</p></div>
+</div></div>
+<div class="card" style="margin-top:14px"><span class="tag">Architecture checklist</span><h3>What every FDE should be able to explain</h3><ul>
+<li>Where does inference run, who processes data, and which contractual / residency rules apply?</li>
+<li>How are repositories, prompts, Skills, tools, MCP servers, infrastructure and datasets versioned?</li>
+<li>How are documents ingested, permission-filtered, refreshed, deleted and cited?</li>
+<li>How does identity flow from the user to Claude, MCP and downstream enterprise systems?</li>
+<li>Can one trace connect the user request to every retrieval, model call, tool action, approval and final change?</li>
+<li>What automated tests, evaluation thresholds, security scans and human reviews block a release?</li>
+<li>Who owns production support, SLOs, cost budgets, incident response and continuous improvement?</li>
+</ul></div>
+</section>
+
+
+<section id="optimization"><div class="section-head"><div><div class="kicker">05 / PRODUCTION OPTIMIZATION PLAYBOOK</div><h2>Optimization: Claude cost, security, observability & performance</h2><p>Move beyond a working prototype. Optimize the full system around cost per successful task, response quality, latency, reliability, security and operational visibility.</p></div></div>
+<div class="callout"><strong>Optimization objective:</strong> Minimize total cost and time per successful business outcome while preserving quality, security and reliability. Do not optimize token cost in isolation if it increases retries, failures, human rework or risk.</div>
+
+<div class="grid two">
+<div class="card"><span class="tag">01 • Cost economics</span><h3>Understand Claude unit economics</h3><ul>
+<li><b>Token accounting:</b> measure input tokens, output tokens, cached input tokens, cache writes, batch usage and model-specific rates.</li>
+<li><b>Cost per task:</b> calculate inference + retrieval + tools + infrastructure + observability + human review / escalation.</li>
+<li><b>Cost per successful outcome:</b> total operating cost divided by successfully completed, quality-accepted business tasks.</li>
+<li><b>Model economics:</b> compare Opus, Sonnet and Haiku by task complexity, success rate, latency and cost—not price per token alone.</li>
+<li><b>Context economics:</b> long system prompts, duplicated history, retrieved passages and tool schemas can increase input spend on every request.</li>
+<li><b>Agent economics:</b> track model calls per task, tool calls, retries, handoffs, planning loops, failed actions and total tokens across the complete trace.</li>
+<li><b>Budget controls:</b> per-user / tenant / workflow budgets, token ceilings, output limits, concurrency caps, quotas and alerts.</li>
+<li><b>Chargeback:</b> attribute usage by customer, team, environment, feature, model and workflow.</li>
+</ul><p class="muted">Use the official <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener">Claude pricing documentation</a> for current model and feature rates. Recalculate when pricing or model versions change.</p></div>
+
+<div class="card"><span class="tag">02 • Cost reduction techniques</span><h3>Reduce waste without degrading quality</h3><ul>
+<li><b>Prompt caching:</b> place stable system instructions, policies, examples and tool definitions in cacheable prefixes; keep dynamic user content later in the prompt.</li>
+<li><b>Prompt compression:</b> remove duplicated instructions, unused examples, verbose tool descriptions and irrelevant conversation history.</li>
+<li><b>Context engineering:</b> retrieve only relevant passages, use metadata filters, deduplicate chunks and cap context by task.</li>
+<li><b>Model routing:</b> route simple classification / extraction to a smaller model and reserve stronger reasoning models for complex, high-value tasks.</li>
+<li><b>Output control:</b> request concise structured output, set appropriate max output tokens and avoid generating content the application can calculate deterministically.</li>
+<li><b>Batch API:</b> move eligible offline workloads—classification, enrichment, evaluations and backfills—to batch processing where latency requirements permit.</li>
+<li><b>Reuse:</b> cache deterministic application results, embeddings, retrieval results and approved intermediate outputs with clear freshness and tenant boundaries.</li>
+<li><b>Agent budgets:</b> set maximum turns, tool calls, wall-clock time and retry count; stop when success criteria are met.</li>
+<li><b>Parallelism:</b> parallelize independent retrieval or tool calls, but avoid redundant fan-out and uncontrolled concurrent model requests.</li>
+</ul><p class="muted">Measure quality before and after each optimization. Prompt caching and batch eligibility, limits and economics are feature- and model-dependent.</p></div>
+
+<div class="card"><span class="tag">03 • Latency & throughput</span><h3>Improve end-to-end performance</h3><ul>
+<li><b>Time-to-first-token (TTFT):</b> use streaming for interactive experiences and render partial output safely.</li>
+<li><b>Latency decomposition:</b> measure queue time, application time, retrieval, model time, tool execution, network overhead and post-processing separately.</li>
+<li><b>Right-size context:</b> reduce unnecessary history, large tool schemas, oversized retrieved documents and repeated instructions.</li>
+<li><b>Tool efficiency:</b> consolidate overly granular tools, use narrow schemas, parallelize independent calls and avoid serial round trips where safe.</li>
+<li><b>Connection management:</b> reuse HTTP connections, apply sensible timeouts, use async I/O and avoid blocking application workers.</li>
+<li><b>Concurrency:</b> use bounded queues, backpressure, rate-limit-aware scheduling, exponential backoff with jitter and tenant-level fairness.</li>
+<li><b>Resilience:</b> handle 429 / 5xx responses, transient network failures, timeouts, partial streams and downstream tool outages.</li>
+<li><b>Model selection:</b> choose the smallest model that meets the measured task-quality threshold; route up only when needed.</li>
+<li><b>Load testing:</b> test realistic prompt sizes, concurrency, burst patterns, tool delays and multi-tenant workloads.</li>
+</ul><p class="muted">Track p50 / p95 / p99 latency, throughput, timeout rate, retry rate and successful tasks per minute—not just average response time.</p></div>
+
+<div class="card"><span class="tag">04 • RAG & data-path optimization</span><h3>Make retrieval faster and more relevant</h3><ul>
+<li><b>Retrieval quality:</b> tune chunk size, overlap, top-k, metadata filters, hybrid search weights and reranker thresholds against a golden dataset.</li>
+<li><b>Index strategy:</b> use appropriate vector dimensions, distance metrics, partitions, namespaces and indexes for workload scale.</li>
+<li><b>Freshness:</b> incremental ingestion, change detection, scheduled refresh, deletion propagation and stale-content monitoring.</li>
+<li><b>Permission filtering:</b> enforce user / group / record ACLs before content reaches the model; do not rely on prompt instructions to hide unauthorized data.</li>
+<li><b>Context packing:</b> deduplicate, diversify and order retrieved passages; preserve source IDs and citation metadata.</li>
+<li><b>Query transformation:</b> rewrite ambiguous queries, expand acronyms and decompose multi-part questions only when evaluation proves value.</li>
+<li><b>Fallbacks:</b> detect no-answer / low-confidence cases and ask a clarifying question, search another source or route to a human.</li>
+<li><b>Evaluation:</b> measure retrieval recall, precision, MRR / nDCG, groundedness, citation accuracy, freshness and permission leakage.</li>
+</ul><p class="muted">Tune retrieval and generation separately. A fluent answer does not prove that the retriever found the right evidence.</p></div>
+
+<div class="card"><span class="tag">05 • Security optimization</span><h3>Reduce risk while preserving usability</h3><ul>
+<li><b>Least privilege:</b> grant each agent, MCP server and tool only the minimum required scopes and actions.</li>
+<li><b>Identity propagation:</b> bind user identity and tenant context to downstream calls; avoid shared credentials that bypass user-level authorization.</li>
+<li><b>Prompt-injection defense:</b> treat retrieved documents, emails, web pages and tool outputs as untrusted data; isolate instructions from data.</li>
+<li><b>Tool controls:</b> allowlist tools, validate arguments server-side, restrict destinations, enforce schemas and require confirmation for high-impact actions.</li>
+<li><b>Data minimization:</b> send only necessary fields to the model; redact secrets and sensitive data from logs, traces and evaluation datasets.</li>
+<li><b>Network controls:</b> private connectivity where supported, egress restrictions, DNS / URL allowlists and SSRF protections.</li>
+<li><b>Output handling:</b> validate structured output, encode content before rendering and treat model output as untrusted input.</li>
+<li><b>Abuse controls:</b> user / tenant quotas, anomaly detection, rate limits, content safeguards and incident kill switches.</li>
+<li><b>Security testing:</b> run prompt-injection, data-exfiltration, cross-tenant, tool-abuse and authorization regression tests before release.</li>
+</ul><p class="muted">The model is not an authorization boundary. Enforce policy in application code, identity providers, MCP servers and downstream systems.</p></div>
+
+<div class="card"><span class="tag">06 • Observability & traceability</span><h3>Instrument the complete agent lifecycle</h3><ul>
+<li><b>Distributed traces:</b> propagate trace / span IDs across frontend, backend, Claude calls, retrieval, MCP, tools and downstream services.</li>
+<li><b>Core dimensions:</b> tenant, user pseudonym, workflow, session, model ID, prompt version, tool name, MCP server, retrieval source IDs and environment.</li>
+<li><b>Cost telemetry:</b> input / output / cached tokens, cache reads and writes, model calls, batch usage and estimated cost.</li>
+<li><b>Quality telemetry:</b> task success, refusal, groundedness, citations, tool success, escalation, user correction and evaluator scores.</li>
+<li><b>Performance telemetry:</b> TTFT, total latency, per-tool duration, queue delay, retries, timeouts and throughput.</li>
+<li><b>Security telemetry:</b> denied actions, policy decisions, approval events, anomalous tool calls, authentication failures and data-access events.</li>
+<li><b>Business traceability:</b> correlate request ID with CRM case / opportunity / account, source document, approval and resulting transaction ID.</li>
+<li><b>Dashboards & alerts:</b> service SLOs, model availability, cost spikes, latency regressions, failure rates, quality drift and suspicious behavior.</li>
+<li><b>Privacy-aware telemetry:</b> redact payloads, restrict trace access, define retention, sample appropriately and separate production data from test fixtures.</li>
+</ul><p class="muted">A useful trace answers: who asked, what context was retrieved, which model ran, what tools were called, what changed, who approved it, how long it took and what it cost.</p></div>
+
+<div class="card"><span class="tag">07 • Reliability & graceful degradation</span><h3>Keep the workflow safe when dependencies fail</h3><ul>
+<li>Define SLOs for availability, latency, task completion, tool success and data freshness.</li>
+<li>Use circuit breakers, bounded retries, idempotency keys and dead-letter queues for downstream actions.</li>
+<li>Provide deterministic fallback paths for unavailable models, tools, retrieval services or cloud dependencies.</li>
+<li>Use human review for high-impact actions and low-confidence or policy-sensitive outcomes.</li>
+<li>Separate read-only tools from write-capable tools; make writes explicit, auditable and reversible where possible.</li>
+<li>Run canary deployments and shadow evaluations before rolling out prompt, model, tool or retrieval changes.</li>
+<li>Maintain incident runbooks, rollback procedures, support ownership and post-incident learning.</li>
+</ul></div>
+
+<div class="card"><span class="tag">08 • Optimization measurement</span><h3>Production scorecard & decision metrics</h3>
+<table><thead><tr><th>Dimension</th><th>Metrics to track</th><th>Optimization question</th></tr></thead><tbody>
+<tr><td>Economics</td><td>Cost / task, cost / successful task, tokens / task, cache hit rate</td><td>Can we lower total cost without lowering accepted task quality?</td></tr>
+<tr><td>Performance</td><td>TTFT, p50 / p95 / p99, throughput, queue time</td><td>Which span or dependency dominates the user wait?</td></tr>
+<tr><td>Quality</td><td>Task success, groundedness, citation accuracy, correction rate</td><td>Does the system reliably solve the intended business problem?</td></tr>
+<tr><td>RAG</td><td>Recall@k, precision, MRR / nDCG, freshness, ACL violations</td><td>Does retrieval return current, relevant, authorized evidence?</td></tr>
+<tr><td>Agents</td><td>Turns / task, tool calls / task, retries, handoffs, completion rate</td><td>Can we simplify the workflow or make actions deterministic?</td></tr>
+<tr><td>Security</td><td>Denied actions, policy violations, injection test pass rate, audit coverage</td><td>Can every action be tied to an identity and policy decision?</td></tr>
+<tr><td>Reliability</td><td>Availability, error rate, timeout rate, recovery time, SLO burn</td><td>Can the workflow fail safely and recover predictably?</td></tr>
+<tr><td>Adoption</td><td>Active users, repeat usage, task adoption, human override rate</td><td>Is the solution improving the actual user workflow?</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="card" style="margin-top:14px"><span class="tag">Optimization workflow</span><h3>Run a disciplined improvement loop</h3>
+<div class="steps">
+<div class="step"><b>1. Establish baseline</b><p>Capture representative task quality, tokens, cost, latency, failure rate and security findings.</p></div>
+<div class="step"><b>2. Find the bottleneck</b><p>Use traces and evaluations to isolate prompt, model, retrieval, tool, network or infrastructure costs.</p></div>
+<div class="step"><b>3. Form one hypothesis</b><p>Example: “A smaller model can handle this classification task with no material quality loss.”</p></div>
+<div class="step"><b>4. Test offline</b><p>Run a versioned golden dataset, adversarial cases, regression checks and cost / latency comparisons.</p></div>
+<div class="step"><b>5. Canary rollout</b><p>Release to a limited cohort with guardrails, dashboards, rollback and human review.</p></div>
+<div class="step"><b>6. Validate business impact</b><p>Compare cost per successful task, cycle time, user acceptance, risk and operational load.</p></div>
+</div></div>
+</section>
+
+
+<section id="usecases"><div class="section-head"><div><div class="kicker">06 / ENTERPRISE AGENT CATALOG</div><h2>Sample Claude agents across the enterprise</h2><p>Practical agent ideas spanning engineering, product, sales, service, HR, security, finance, operations and marketing. Each can start as a Claude Enterprise workflow or API-powered assistant and evolve into a governed tool-using agent.</p></div></div>
+<div class="callout"><strong>Common implementation pattern:</strong> Choose a business trigger → connect approved knowledge sources with permission-aware retrieval → define Claude instructions and tools → add MCP / API integrations for actions → require human approval for consequential changes → evaluate, trace and monitor outcomes. Use Claude Enterprise for employee-facing knowledge workflows, Claude Code for software engineering, and Claude Platform / Agent SDK / managed agent capabilities for custom applications and automated workflows. Confirm current product availability and feature support for your deployment.</div>
+
+<div class="grid three">
+<div class="card"><span class="tag">Engineering • Claude Code / Agent SDK</span><h3>1. SDLC Engineering Agent</h3><p>Reads tickets and repository context, proposes implementation plans, generates code and tests, reviews pull requests, and summarizes release risks. Connect GitHub / GitLab, CI pipelines, issue trackers and test tools; require developer approval before merge or deployment.</p></div>
+<div class="card"><span class="tag">Product • Claude Enterprise / API</span><h3>2. Product Knowledge Base Search Agent</h3><p>Answers questions over product docs, release notes, FAQs and architecture guides with citations. Ingest approved sources into a permission-aware RAG index, retrieve relevant passages and return source links and freshness metadata.</p></div>
+<div class="card"><span class="tag">Service • Enterprise / API + MCP</span><h3>3. Customer Support Agent</h3><p>Classifies incoming cases, retrieves troubleshooting steps, drafts responses and recommends next actions. Integrate CRM / Service Cloud, knowledge, order status and case APIs; let agents approve refunds, credits or sensitive updates.</p></div>
+<div class="card"><span class="tag">People • Claude Enterprise</span><h3>4. Employee HR Assistant</h3><p>Answers policy, benefits, leave and payroll-process questions using approved HR content. Apply employee-specific access filters and route personal, legal or sensitive requests to HR rather than exposing restricted records.</p></div>
+<div class="card"><span class="tag">People • Enterprise / API + workflows</span><h3>5. New Employee Onboarding Agent</h3><p>Creates a role-based onboarding checklist, explains policies, tracks training and coordinates equipment / access requests. Connect HRIS, identity, IT service desk and learning systems; keep account provisioning behind approval and identity controls.</p></div>
+<div class="card"><span class="tag">Security • API / Agent SDK + MCP</span><h3>6. Security Operations Agent</h3><p>Summarizes alerts, enriches indicators, correlates incidents and drafts investigation steps. Integrate SIEM, EDR, vulnerability and ticketing tools with read-only defaults; require security approval for containment or remediation actions.</p></div>
+<div class="card"><span class="tag">Operations • API + observability tools</span><h3>7. Observability / SRE Agent</h3><p>Correlates logs, metrics, traces and recent deployments to explain incidents and suggest likely causes. Connect OpenTelemetry backends, dashboards and incident systems; generate runbooks and incident summaries while gating production changes.</p></div>
+<div class="card"><span class="tag">Sales • Enterprise / API + CRM MCP</span><h3>8. Deal / Sales Assistant Agent</h3><p>Prepares account briefs, summarizes stakeholder activity, identifies deal risks and drafts follow-ups. Retrieve CRM, email and meeting context under user permissions; write CRM updates only after seller review.</p></div>
+<div class="card"><span class="tag">Revenue • API + CRM / billing</span><h3>9. Renewals Agent</h3><p>Monitors renewal dates, product usage, support history, contract terms and stakeholder engagement to flag churn risk and prepare renewal plans. Connect CRM, subscription, billing and customer-success systems; route pricing or contract changes to owners.</p></div>
+<div class="card"><span class="tag">Finance • API + analytics</span><h3>10. Sales Forecasting Agent</h3><p>Explains pipeline movement, identifies stale opportunities and highlights forecast assumptions or anomalies. Query governed CRM and warehouse data, apply deterministic forecast calculations, and have Claude narrate drivers rather than invent numbers.</p></div>
+<div class="card"><span class="tag">Risk / Compliance • API + document AI</span><h3>11. KYC / KYB Onboarding Agent</h3><p>Collects required business documents, extracts entity details, checks completeness and flags discrepancies for review. Integrate approved identity / verification providers and case management; never let the model make final regulated eligibility decisions.</p></div>
+<div class="card"><span class="tag">Commerce • API + catalog / CRM</span><h3>12. Product Recommendation & Upsell Agent</h3><p>Matches customer needs and entitlements to compatible products, add-ons and bundles. Ground suggestions in the product catalog, eligibility rules, pricing and usage signals; disclose rationale and validate offers with deterministic rules.</p></div>
+<div class="card"><span class="tag">Product strategy • Enterprise / API</span><h3>13. Product Research Agent</h3><p>Researches competitors, customer feedback, market signals and feature requests; clusters themes and drafts evidence-backed opportunity briefs. Use approved web / research sources and internal feedback repositories, retaining citations and dates.</p></div>
+<div class="card"><span class="tag">Marketing • Enterprise / API</span><h3>14. Marketing Campaign Agent</h3><p>Builds audience insights, campaign briefs, content variants and performance summaries. Connect approved brand assets, campaign analytics and marketing platforms; enforce consent, suppression lists, brand review and approval before publishing.</p></div>
+<div class="card"><span class="tag">Customer success • API + product analytics</span><h3>15. Customer Health Agent</h3><p>Combines adoption, usage, support and renewal signals into an explainable health summary with recommended interventions. Query product analytics and CRM data, show evidence for each risk signal and assign follow-up tasks to account teams.</p></div>
+<div class="card"><span class="tag">Procurement • Enterprise / API + MCP</span><h3>16. Procurement & Vendor Agent</h3><p>Summarizes vendor proposals, compares contract terms against policy and tracks renewal / risk events. Connect procurement, contract and vendor-risk systems; restrict approvals and purchase commitments to authorized humans.</p></div>
+<div class="card"><span class="tag">Legal • Enterprise / API</span><h3>17. Contract Review Assistant</h3><p>Extracts clauses, compares language to approved playbooks and flags deviations, missing terms and renewal obligations. Retrieve the correct template and clause library; position output as review support, not legal advice or autonomous approval.</p></div>
+<div class="card"><span class="tag">Finance • API + ERP</span><h3>18. Finance & Invoice Agent</h3><p>Extracts invoice fields, matches purchase orders, explains variances and routes exceptions. Integrate OCR / document processing, ERP and workflow tools; use deterministic reconciliation and approval controls before posting or payment.</p></div>
+<div class="card"><span class="tag">Executive operations • Enterprise</span><h3>19. Executive Briefing Agent</h3><p>Creates daily or weekly summaries of KPIs, strategic initiatives, risks and decisions needed. Pull from governed BI, project and CRM sources, link every metric to its source and distinguish facts from generated interpretation.</p></div>
+<div class="card"><span class="tag">IT • Enterprise / API + ITSM MCP</span><h3>20. IT Helpdesk Agent</h3><p>Resolves common employee IT questions, diagnoses standard issues and creates service tickets with relevant context. Connect knowledge, device inventory and ITSM; require identity verification and approval for access changes or destructive actions.</p></div>
+</div>
+
+<div class="card" style="margin-top:14px"><span class="tag">Choose the right Claude product surface</span><h3>Where these agents fit in the Claude ecosystem</h3>
+<div class="grid two">
+<div><h4>Claude Enterprise</h4><p>Best starting point for employee-facing assistants, internal knowledge discovery, document analysis and team productivity workflows using approved enterprise context and controls.</p></div>
+<div><h4>Claude Code</h4><p>Best fit for software engineering workflows: repository understanding, implementation assistance, tests, code review and developer productivity. Keep code changes reviewable and CI-validated.</p></div>
+<div><h4>Claude Platform / API</h4><p>Build custom customer-facing or embedded agents with your application identity, business logic, retrieval, tool execution, UI, evaluation and telemetry.</p></div>
+<div><h4>Claude Agent SDK / Managed Agents</h4><p>Build or operate longer-running tool-using agent workflows with controlled tools, state, execution boundaries and application-level monitoring. Validate current availability and deployment fit.</p></div>
+<div><h4>MCP and connectors</h4><p>Expose enterprise systems and approved actions through governed integrations. Enforce authorization in each server and downstream application; MCP itself is not an access-control policy.</p></div>
+<div><h4>Claude Cowork and Skills</h4><p>Support repeatable knowledge-work tasks with reusable instructions and workflows. Use only approved connectors, scoped access and human review for sensitive outputs or actions.</p></div>
+</div></div>
+
+<div class="card" style="margin-top:14px"><span class="tag">Build one agent end to end</span><h3>Example: Product KB Search Agent implementation</h3>
+<div class="steps">
+<div class="step"><b>1. Sources</b><p>Connect product docs, release notes, support articles and approved repository markdown; capture owner, version, ACL and updated timestamp.</p></div>
+<div class="step"><b>2. Knowledge pipeline</b><p>Parse, chunk, embed and index content; support incremental refresh, deletion propagation, metadata filters and permission-aware retrieval.</p></div>
+<div class="step"><b>3. Claude experience</b><p>Use Claude Enterprise for employee discovery or the Claude API for an embedded portal; instruct Claude to cite retrieved evidence and say when evidence is missing.</p></div>
+<div class="step"><b>4. Tools & MCP</b><p>Expose search, product-version lookup and feedback submission as narrow tools; keep search read-only and validate all tool arguments server-side.</p></div>
+<div class="step"><b>5. Security & evaluation</b><p>Test access boundaries, prompt injection, outdated answers, citation accuracy and no-answer behavior using a versioned golden question set.</p></div>
+<div class="step"><b>6. Operate & improve</b><p>Trace queries, retrieval IDs, model usage, latency, cost and user feedback; monitor freshness and improve based on failed searches.</p></div>
+</div></div>
+</section>
+
+<section id="skills"><div class="section-head"><div><div class="kicker">04 / TECHNICAL SKILLS</div><h2>What a Claude FDE must master</h2><p>Build depth in engineering and breadth across enterprise operations.</p></div></div>
+<div class="grid">
+<div class="card"><span class="tag">Core engineering</span><h3>Backend & APIs</h3><ul><li>Python / TypeScript</li><li>REST, OAuth2, webhooks</li><li>Async, queues, retries, idempotency</li><li>SQL, PostgreSQL, Redis</li><li>Testing, Git, Linux</li></ul></div>
+<div class="card"><span class="tag">Claude stack</span><h3>Claude implementation</h3><ul><li>Messages API and tool use</li><li>Streaming, structured outputs</li><li>Prompt and context engineering</li><li>Claude Code and CLAUDE.md</li><li>Skills, hooks and MCP</li></ul></div>
+<div class="card"><span class="tag">AI systems</span><h3>RAG & agents</h3><ul><li>Parsing, chunking and embeddings</li><li>Hybrid retrieval and reranking</li><li>Agent state and orchestration</li><li>Human-in-the-loop workflows</li><li>Evaluation and red teaming</li></ul></div>
+<div class="card"><span class="tag">Cloud & platform</span><h3>Deployment</h3><ul><li>AWS / Azure / GCP fundamentals</li><li>Docker and Kubernetes</li><li>CI/CD and infrastructure as code</li><li>Secrets, networking and IAM</li><li>Scaling, availability and DR</li></ul></div>
+<div class="card"><span class="tag">Enterprise readiness</span><h3>Security & governance</h3><ul><li>SSO, SCIM, RBAC and tenant isolation</li><li>PII, retention and data residency</li><li>Prompt injection and exfiltration</li><li>Audit logs and policy enforcement</li><li>Threat modeling and approvals</li></ul></div>
+<div class="card"><span class="tag">Field skills</span><h3>Customer engineering</h3><ul><li>Discovery and requirements</li><li>Architecture workshops</li><li>Live debugging and demos</li><li>Executive communication</li><li>Value realization and change</li></ul></div>
+</div></section>
+<section id="labs"><div class="section-head"><div><div class="kicker">05 / HANDS-ON IMPLEMENTATION LAB</div><h2>Build enterprise-grade Claude solutions</h2><p>Each lab should produce working code, tests, architecture and an operational runbook.</p></div></div>
+<div class="grid two">
+<div class="card"><span class="tag">Lab 01 • Starter</span><h3>Secure Claude API service</h3><p>Build a FastAPI backend that calls Claude, streams responses and protects credentials.</p><ul><li>Backend key management; never expose keys in browser code</li><li>Request validation, timeout and retry policy</li><li>Token/cost logging and unit tests</li></ul><pre>POST /v1/assistant
+{
+  "message": "Summarize this case",
+  "tenant_id": "tenant-001"
+}</pre></div>
+<div class="card"><span class="tag">Lab 02 • Knowledge</span><h3>Enterprise RAG assistant</h3><p>Connect approved knowledge sources and return evidence-backed answers.</p><ul><li>Ingest PDFs, wiki and CRM knowledge</li><li>Chunk, index, retrieve and rerank</li><li>Enforce source-level permissions</li><li>Show citations and abstain when evidence is weak</li></ul><pre>Ingest → Parse → Chunk → Embed
+       → ACL-aware retrieve → Rerank
+       → Claude → Cited response</pre></div>
+<div class="card"><span class="tag">Lab 03 • Integration</span><h3>MCP server for enterprise systems</h3><p>Expose a small, secure tool surface for CRM, ticketing or ERP operations.</p><ul><li>Read-only tools first</li><li>Typed input schemas and server-side authorization</li><li>Audit every call; require approval for writes</li></ul><pre>tools:
+  - find_customer
+  - get_open_cases
+  - draft_case_update
+  - submit_case_update  # approval gate</pre></div>
+<div class="card"><span class="tag">Lab 04 • Agent</span><h3>Customer service resolution agent</h3><p>Investigate an issue, retrieve policy, draft a response and route uncertain cases to a human.</p><ul><li>Explicit state machine and stop conditions</li><li>Bounded tool calls and timeouts</li><li>Human approval for customer-impacting actions</li><li>Trace, evaluate and replay sessions</li></ul><pre>Classify → Retrieve → Investigate
+   → Draft → Policy check → Approve
+   → Execute → Verify → Close</pre></div>
+</div></section>
+<section id="governance"><div class="section-head"><div><div class="kicker">06 / TRUST & OPERATIONS</div><h2>Enterprise production-readiness checklist</h2><p>Security is enforced in systems and policies—not delegated to a prompt.</p></div></div>
+<div class="grid two">
+<div class="card"><h3>Security design gates</h3><div class="checklist" id="securityChecks">
+<label><input type="checkbox"> Identity, SSO and service-to-service authentication defined</label>
+<label><input type="checkbox"> Least-privilege access for users, agents and tools</label>
+<label><input type="checkbox"> Secrets stored in a vault; no client-side API keys</label>
+<label><input type="checkbox"> Source permissions enforced before retrieved content reaches the model</label>
+<label><input type="checkbox"> Prompt injection and data exfiltration tests completed</label>
+<label><input type="checkbox"> PII handling, retention and deletion policies approved</label>
+<label><input type="checkbox"> Write actions have validation and human approval where needed</label>
+<label><input type="checkbox"> Audit trail and incident kill switch tested</label>
+</div><div class="progress"><span id="securityProgress"></span></div><small class="muted" id="securityCount">0 of 8 complete</small></div>
+<div class="card"><h3>Operational scorecard</h3><table><tr><td>Quality</td><td>Task success, groundedness, citation accuracy, escalation rate</td></tr><tr><td>Reliability</td><td>Availability, error rate, tool failure, recovery time</td></tr><tr><td>Performance</td><td>p50/p95 latency, throughput, queue time</td></tr><tr><td>Economics</td><td>Cost per successful task, tokens, tool and human-review cost</td></tr><tr><td>Adoption</td><td>Active users, repeat usage, workflow completion, user feedback</td></tr><tr><td>Risk</td><td>Policy violations, data exposure, override and incident counts</td></tr></table></div>
+</div>
+<details><summary>Threat model: what can go wrong?</summary><ul><li>Indirect prompt injection hidden in retrieved documents or web content.</li><li>Over-permissioned MCP tools exposing or modifying sensitive records.</li><li>Cross-tenant retrieval leakage caused by missing authorization filters.</li><li>Secrets or PII captured in prompts, logs, traces or error messages.</li><li>Unbounded agent loops, runaway spend or repeated external actions.</li><li>Model/provider changes that silently regress critical workflows.</li></ul><p>Mitigate with defense in depth: authorization outside the model, narrow tools, output validation, egress controls, budget limits, eval gates, audit and rollback.</p></details>
+</section>
+<section id="roadmap"><div class="section-head"><div><div class="kicker">07 / 24-WEEK LEARNING PLAN</div><h2>Become implementation-ready</h2><p>Suggested sequence: learn a concept, build a lab, deploy it, then explain the trade-offs.</p></div></div>
+<div class="grid two">
+<div class="card"><h3>Weeks 1–4 · Engineering foundations</h3><ul><li>Python or TypeScript, Git, Linux</li><li>REST APIs, OAuth, SQL, testing</li><li>Build a secure API service</li></ul><h3>Weeks 5–8 · Claude platform</h3><ul><li>Messages API, streaming, tool use</li><li>Prompt/context design and structured outputs</li><li>Build and evaluate a Claude assistant</li></ul><h3>Weeks 9–12 · Enterprise integrations</h3><ul><li>MCP concepts and server implementation</li><li>CRM, ticketing, document connectors</li><li>Identity propagation and audit</li></ul></div>
+<div class="card"><h3>Weeks 13–16 · RAG and agents</h3><ul><li>Ingestion, retrieval, reranking, ACLs</li><li>Agent state, tool boundaries, approvals</li><li>Build a knowledge-grounded workflow</li></ul><h3>Weeks 17–20 · Production deployment</h3><ul><li>Docker, cloud, CI/CD and secrets</li><li>Observability, evaluation and incident response</li><li>Deploy a monitored end-to-end solution</li></ul><h3>Weeks 21–24 · Field readiness</h3><ul><li>Discovery workshop and solution proposal</li><li>Executive demo and quantified ROI</li><li>Portfolio case study and mock interviews</li></ul></div>
+</div>
+<div class="card"><h3>Personal progress tracker</h3><p class="muted">Tick off each milestone as you complete it. Progress is stored only in this page session/browser view.</p><div class="checklist" id="milestones">
+<label><input type="checkbox"> I can build and test a production-style API</label>
+<label><input type="checkbox"> I can integrate Claude through a backend service</label>
+<label><input type="checkbox"> I can implement secure tool use / MCP</label>
+<label><input type="checkbox"> I can build ACL-aware RAG with citations</label>
+<label><input type="checkbox"> I can evaluate quality and adversarial behavior</label>
+<label><input type="checkbox"> I can deploy, monitor and troubleshoot the solution</label>
+<label><input type="checkbox"> I can lead discovery and explain architecture trade-offs</label>
+<label><input type="checkbox"> I can show measurable business value in a case study</label>
+</div><div class="progress"><span id="milestoneProgress"></span></div><small class="muted" id="milestoneCount">0 of 8 milestones complete</small></div>
+</section>
+<section id="prompts"><div class="section-head"><div><div class="kicker">08 / FIELD TOOLKIT</div><h2>FDE prompts and working templates</h2><p>Use these as starting points; replace assumptions with customer facts.</p></div></div>
+<details open><summary>Customer discovery workshop prompt</summary><pre>You are an enterprise Forward Deployed Engineer.
+Interview me about this business workflow. Ask one question at a time.
+Identify users, systems of record, data sensitivity, volume, exceptions,
+failure costs, approval points, baseline metrics and success criteria.
+Do not propose an AI solution until the problem and constraints are clear.
+Then produce: problem statement, current-state workflow, prioritized use
+cases, risks, MVP scope, measurable KPIs and open questions.</pre></details>
+<details><summary>Claude solution architecture prompt</summary><pre>Act as a principal enterprise AI architect. Given the validated use case,
+design a Claude implementation. Compare Claude Enterprise, Claude API and
+supported cloud deployment options. Include components, data flows, identity,
+MCP/tool boundaries, RAG, network, security, evaluation, observability,
+cost controls, failure modes, rollout and rollback. State assumptions and
+trade-offs. Never invent product capabilities; flag items for verification.</pre></details>
+<details><summary>Production readiness review prompt</summary><pre>Review this Claude-powered workflow as a security, SRE and AI evaluation
+review board. Inspect identity, authorization, tenant isolation, secrets,
+PII, prompt injection, tool permissions, human approval, retries,
+idempotency, timeouts, cost limits, tracing, retention, evaluation coverage,
+incident response and rollback. Return critical blockers, severity,
+evidence required, owner and release recommendation.</pre></details>
+<details><summary>Executive value realization prompt</summary><pre>Translate implementation results into an executive value report. Compare
+baseline vs measured outcomes: cycle time, throughput, quality, adoption,
+cost per successful task, human review and risk. Separate measured facts
+from estimates. Calculate ROI only when inputs are supplied. Recommend
+the next highest-value workflow and explain why.</pre></details>
+</section>
+<section id="quiz"><div class="section-head"><div><div class="kicker">09 / KNOWLEDGE CHECK</div><h2>Claude FDE readiness quiz</h2><p>Test the engineering judgment expected in enterprise implementation.</p></div></div>
+<div class="card">
+<div class="quizq" data-answer="b"><b>1. Where should source-system authorization be enforced in a RAG solution?</b><label><input type="radio" name="q1" value="a"> Only in the system prompt</label><label><input type="radio" name="q1" value="b"> At retrieval / application authorization boundaries</label><label><input type="radio" name="q1" value="c"> After the answer is generated</label><div class="feedback"></div></div>
+<div class="quizq" data-answer="c"><b>2. What is the safest default for a new MCP integration?</b><label><input type="radio" name="q2" value="a"> Give the agent full admin access</label><label><input type="radio" name="q2" value="b"> Let the model invent tool arguments</label><label><input type="radio" name="q2" value="c"> Start with narrow, least-privilege tools and validated schemas</label><div class="feedback"></div></div>
+<div class="quizq" data-answer="a"><b>3. Which metric best reflects workflow economics?</b><label><input type="radio" name="q3" value="a"> Cost per successfully completed task</label><label><input type="radio" name="q3" value="b"> Tokens per prompt only</label><label><input type="radio" name="q3" value="c"> Number of model calls only</label><div class="feedback"></div></div>
+<div class="quizq" data-answer="b"><b>4. What should happen before an irreversible action?</b><label><input type="radio" name="q4" value="a"> Increase temperature</label><label><input type="radio" name="q4" value="b"> Apply policy checks and a human approval gate where required</label><label><input type="radio" name="q4" value="c"> Hide the tool call from logs</label><div class="feedback"></div></div>
+<div class="quizq" data-answer="c"><b>5. What is the FDE's primary outcome?</b><label><input type="radio" name="q5" value="a"> Produce the most impressive demo</label><label><input type="radio" name="q5" value="b"> Use the largest model everywhere</label><label><input type="radio" name="q5" value="c"> Deliver a reliable, adopted and measurable customer outcome</label><div class="feedback"></div></div>
+<button class="btn" id="grade">Grade my answers</button> <button class="btn secondary" id="resetQuiz">Reset</button><p id="quizResult" class="cyan"></p>
+</div></section>
+<section id="resources"><div class="section-head"><div><div class="kicker">10 / OFFICIAL LEARNING RESOURCES</div><h2>Learn from primary documentation</h2><p>Verify current capabilities, model availability, limits and enterprise terms in official docs.</p></div></div>
+<div class="card">
+<div class="resource"><div><b>Anthropic developer documentation</b><br><span>API, models, tool use, prompt engineering and platform guides</span></div><a href="https://docs.anthropic.com/" target="_blank" rel="noopener">Open docs ↗</a></div>
+<div class="resource"><div><b>Claude Code documentation</b><br><span>CLI, settings, hooks, skills, MCP and enterprise configuration</span></div><a href="https://docs.claude.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Open docs ↗</a></div>
+<div class="resource"><div><b>Claude Enterprise</b><br><span>Admin, identity, governance and enterprise product capabilities</span></div><a href="https://claude.com/solutions/enterprise" target="_blank" rel="noopener">Explore ↗</a></div>
+<div class="resource"><div><b>Model Context Protocol</b><br><span>Protocol concepts, servers, clients and security guidance</span></div><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Learn MCP ↗</a></div>
+<div class="resource"><div><b>Anthropic Cookbook</b><br><span>Practical examples and implementation patterns</span></div><a href="https://github.com/anthropics/anthropic-cookbook" target="_blank" rel="noopener">Explore GitHub ↗</a></div>
+<div class="resource"><div><b>Anthropic Trust Center</b><br><span>Security, privacy and compliance information</span></div><a href="https://trust.anthropic.com/" target="_blank" rel="noopener">Trust Center ↗</a></div>
+<div class="resource"><div><b>OWASP Top 10 for LLM Applications</b><br><span>Threats and mitigations for LLM-powered systems</span></div><a href="https://genai.owasp.org/" target="_blank" rel="noopener">Explore ↗</a></div>
+</div>
+</section>
+
+<section id="jobs"><div class="section-head"><div><div class="kicker">12 / CAREER & JOB PORTAL</div><h2>Forward Deployed Engineer job portal</h2><p>Understand the job description, identify the skills employers screen for, and explore current U.S. openings.</p></div></div>
+<div class="grid two">
+<div class="card"><span class="tag">Sample job description</span><h3>Forward Deployed Engineer — Enterprise Claude & AI</h3><p><b>Role mission:</b> Partner with enterprise customers to turn ambiguous business problems into secure, production-grade AI systems using Claude, APIs, agents, retrieval and enterprise integrations.</p><p><b>Responsibilities</b></p><ul><li>Lead customer discovery, workflow mapping and technical workshops.</li><li>Design and implement Claude-powered applications using APIs, tool use, MCP and RAG.</li><li>Integrate enterprise systems such as Salesforce, ServiceNow, SAP, data platforms and document repositories.</li><li>Build backend services, connectors, evaluation pipelines and deployment automation.</li><li>Own security, identity, data access, observability, reliability and production troubleshooting.</li><li>Run pilots, train users, measure adoption and demonstrate business outcomes.</li></ul></div>
+<div class="card"><span class="tag">Typical qualifications</span><h3>What hiring teams look for</h3><ul><li>Strong Python, TypeScript or another production language; APIs, SQL and Git.</li><li>Experience shipping customer-facing software and integrating enterprise systems.</li><li>Cloud fundamentals (AWS, Azure or GCP), Docker and CI/CD; Kubernetes is often useful.</li><li>Working knowledge of LLM APIs, prompt/context engineering, RAG, tool use and agent workflows.</li><li>Security fundamentals: OAuth, RBAC, secrets, tenant isolation, data privacy and auditability.</li><li>Excellent customer communication, ambiguity handling and willingness to work close to users.</li></ul><p><b>Common interview loop:</b> coding / practical build • system design • customer problem-solving • debugging • behavioral and communication.</p></div>
+</div>
+<div class="card" style="margin-top:14px"><h3>Example job description — copy-ready outline</h3><p><b>Title:</b> Forward Deployed Engineer, Enterprise AI (Claude)</p><p><b>About the role:</b> You will embed with customer teams to discover high-value workflows and deliver AI solutions from prototype through production. You will work across application engineering, data, security and operations, translating customer needs into maintainable software and measurable outcomes.</p><p><b>Success in 90 days:</b> Map a customer workflow and baseline; deliver a secure pilot; implement evaluation and monitoring; obtain stakeholder acceptance; publish a production rollout and value-realization plan.</p><p><b>Note:</b> This is an illustrative JD template, not a vacancy from a specific employer. Actual FDE titles and requirements vary significantly.</p></div>
+<div class="section-head" style="margin-top:28px"><div><div class="kicker">LIVE SEARCH SNAPSHOT • NOV 24, 2026</div><h2>Current U.S. openings</h2><p>Relevant listings returned in a current search. Job boards can lag or duplicate postings; verify availability, requirements and location on the application page.</p></div><span class="tag">U.S. roles</span></div>
+<div class="grid">
+<div class="card"><span class="tag">Claude + AWS fit</span><h3>Senior Forward Deployed AI Engineer / Solutions Architect</h3><p><b>Provectus</b> · Remote, U.S.</p><p class="cyan">$200,000–$250,000 / year</p><p>Enterprise AI delivery in regulated environments; listing excerpt explicitly references shipping Claude + AWS systems.</p><a href="https://to.indeed.com/aalfrrbcygfx" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+<div class="card"><span class="tag">Texas • Dallas</span><h3>NVIDIA AI Enterprise Forward Deployed Engineer</h3><p><b>Kyndryl</b> · Dallas, TX</p><p class="cyan">$115,080–$262,320 / year</p><p>Enterprise AI deployment and modernization; relevant for customer-facing AI infrastructure engineering.</p><a href="https://to.indeed.com/aab8dyj9yq4l" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+<div class="card"><span class="tag">Texas • Irving</span><h3>AI Engineer — Forward Deployed Engineer — Snowflake</h3><p><b>Accenture</b> · Irving, TX</p><p class="cyan">$73,000–$220,000 / year</p><p>Client-facing AI and data platform transformation through Accenture's Advanced Technology Centers.</p><a href="https://www.ziprecruiter.com/job-redirect?match_token=CpQBChZ0eE90M3hsR1RiTFhucjAwRnE5Qm1nEiQwMWEyMGM3Ny02YjNhLTc5YmQtYmEwMy02YTc5YjI3MmRjZWUaUEFBRldQV3F0NGVyXzF2OWpPNTNWcGVSTU9WRzhJM29hYTN4LXg5dFdaMGRGdC1BQ2QwWDN5Zk10N3lMbXF0YTUzaGxvcXhxYXV4ZUs4MnE2IOWtBRABGOWtBQ%3D%3D&server_redirect=true&tsid=100000600&impression_lot_id=mcp-1795505482299-14f496u" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+<div class="card"><span class="tag">Remote</span><h3>Forward Deployed AI Engineer</h3><p><b>MeridianLink</b> · Remote, U.S.</p><p class="cyan">$114,593–$230,000 / year</p><p>Forward-deployed AI engineering role in a financial technology environment.</p><a href="https://to.indeed.com/aatqrrrm7fzv" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+<div class="card"><span class="tag">OpenAI • Cyber</span><h3>Forward Deployed Engineer (FDE), Cyber</h3><p><b>OpenAI</b> · New York, NY</p><p class="cyan">$185,000–$300,000 / year</p><p>Deploy frontier AI with security and engineering teams protecting critical systems.</p><a href="https://to.indeed.com/aahqw7xngdrc" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+<div class="card"><span class="tag">OpenAI • Healthcare</span><h3>Forward Deployed Engineer (FDE), Healthcare</h3><p><b>OpenAI</b> · Seattle, WA</p><p class="cyan">$185,000–$300,000 / year</p><p>Production AI deployments across clinical, operational and member-facing workflows.</p><a href="https://www.ziprecruiter.com/job-redirect?match_token=CpQBChZSVDlHNkRvTFVEWnRmSndaaDZ2djl3EiQwMWEyMGM3Ny02YjNhLTc5OGYtOWNhZC1kNDk5YjhhNmJiOTcaUEFBR1gzNlFkZVlnZGVhdmVOODBiZXQzT1VBVUZUb2JNOFZERzcxVEJnZmhBNEdlZDBOQjFiME9RS0gzb1Nrc0R3cktuS2VfZFdBbTA0M1FQIOWtBRABGOWtBQ%3D%3D&server_redirect=true&tsid=100000600&impression_lot_id=mcp-1795505482299-14f496u" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+<div class="card"><span class="tag">Enterprise AI</span><h3>Forward Deployed Engineer, Enterprise AI</h3><p><b>Meta</b> · Menlo Park, CA</p><p class="cyan">$183,997–$257,000 / year</p><p>Technical bridge helping enterprise partners integrate foundation models and AI tools.</p><a href="https://to.indeed.com/aagfzcgjftn4" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+<div class="card"><span class="tag">Consulting • Security</span><h3>Cybersecurity AI Forward Deployed Engineer Consultant</h3><p><b>Accenture</b> · Cleveland, OH</p><p class="cyan">$70,000–$235,000 / year</p><p>Customer-facing AI implementation in cybersecurity lifecycle and enterprise protection.</p><a href="https://www.ziprecruiter.com/" target="_blank" rel="noopener">Search employer listing ↗</a></div>
+<div class="card"><span class="tag">OpenAI • AI infra</span><h3>Forward Deployed Engineer (FDE) — AI Infra</h3><p><b>OpenAI</b> · San Francisco, CA</p><p class="cyan">$185,000–$300,000 / year</p><p>Customer deployments at the intersection of frontier AI systems and core platform engineering.</p><a href="https://www.ziprecruiter.com/job-redirect?match_token=CpQBChZ3Ry03Q3B4NWFrT0xQSzNCZWtLR1R3EiQwMWEyMGM3Ny02YjNhLTc5YzEtODQ2ZC1jYzRmYmMwOWU3YzAaUEFBR1VxaUZmRmkyMnluVWtWb3JuWTE5czVIcUU3TFlpaEZCZVBWb0VwbF9iWTFSb3VjTFhYclQ3M1ByZkZsQUZPaHZ5aVhWbnpMTWtDdWh4IOWtBRABGOWtBQ%3D%3D&server_redirect=true&tsid=100000600&impression_lot_id=mcp-1795505482299-14f496u" target="_blank" rel="noopener">View listing / apply ↗</a></div>
+</div>
+<p class="muted" style="font-size:11px;margin-top:12px">Listings and compensation are reproduced from search-provider excerpts available on Nov 24, 2026; they are not guarantees of active status. Some links lead to aggregators or employer search pages. Confirm the exact requisition on the employer's career site before applying. Similar listings may appear in multiple cities or feeds.</p>
+<div class="card" style="margin-top:14px"><h3>Where to monitor FDE hiring</h3><div class="resource"><b>Anthropic Careers</b><a href="https://www.anthropic.com/careers" target="_blank" rel="noopener">Open ↗</a></div><div class="resource"><b>OpenAI Careers</b><a href="https://openai.com/careers/" target="_blank" rel="noopener">Open ↗</a></div><div class="resource"><b>Palantir Careers</b><a href="https://www.palantir.com/careers/" target="_blank" rel="noopener">Open ↗</a></div><div class="resource"><b>Databricks Careers</b><a href="https://www.databricks.com/company/careers" target="_blank" rel="noopener">Open ↗</a></div><div class="resource"><b>Accenture Careers</b><a href="https://www.accenture.com/us-en/careers" target="_blank" rel="noopener">Open ↗</a></div><div class="resource"><b>LinkedIn Jobs — FDE search</b><a href="https://www.linkedin.com/jobs/search/?keywords=Forward%20Deployed%20Engineer&location=United%20States" target="_blank" rel="noopener">Search ↗</a></div><div class="resource"><b>Indeed — FDE search</b><a href="https://www.indeed.com/jobs?q=Forward+Deployed+Engineer&l=United+States" target="_blank" rel="noopener">Search ↗</a></div></div>
+</section>
+<section id="learning"><div class="section-head"><div><div class="kicker">13 / LEARNING RESOURCES</div><h2>Claude FDE learning resource library</h2><p>Curated official documentation, free courses, hands-on repositories, community references and paid learning.</p></div></div>
+<div class="card" style="border-color:var(--accent);margin-bottom:14px"><span class="tag">Featured • Your Udemy course</span><h3>Forward Deployed Engineer (FDE) Interview Prep — 100 Q&A</h3><p>Use this course as a structured interview-preparation companion while building the hands-on implementation labs in this academy.</p><a class="btn" href="https://www.udemy.com/course/forward-deployed-engineer-fde-interview-prep-100-qa/?referralCode=9D9A9528B0CD0BF60D29" target="_blank" rel="noopener">Explore the Udemy course ↗</a></div>
+<div class="tabs"><button class="tab active" data-tab="res1">Claude official</button><button class="tab" data-tab="res2">Courses & tutorials</button><button class="tab" data-tab="res3">MCP & agents</button><button class="tab" data-tab="res4">Engineering & cloud</button><button class="tab" data-tab="res5">FDE career</button></div>
+<div id="res1" class="tabcontent active card">
+<div class="resource"><div><b>Anthropic API documentation</b><br><span>API quickstart, models, Messages API, tool use, streaming and vision</span></div><a href="https://docs.anthropic.com/" target="_blank" rel="noopener">Open ↗</a></div>
+<div class="resource"><div><b>Claude developer docs</b><br><span>Product and developer guides, prompting and implementation concepts</span></div><a href="https://docs.claude.com/" target="_blank" rel="noopener">Open ↗</a></div>
+<div class="resource"><div><b>Claude Code documentation</b><br><span>Install, workflows, settings, hooks, skills, MCP and enterprise configuration</span></div><a href="https://docs.claude.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Open ↗</a></div>
+<div class="resource"><div><b>Claude Enterprise</b><br><span>Enterprise product overview and administration context</span></div><a href="https://claude.com/solutions/enterprise" target="_blank" rel="noopener">Open ↗</a></div>
+<div class="resource"><div><b>Anthropic Cookbook</b><br><span>Code examples and practical patterns for Claude API use cases</span></div><a href="https://github.com/anthropics/anthropic-cookbook" target="_blank" rel="noopener">GitHub ↗</a></div>
+<div class="resource"><div><b>Anthropic courses and learning</b><br><span>Official learning materials and educational resources</span></div><a href="https://www.anthropic.com/learn" target="_blank" rel="noopener">Explore ↗</a></div>
+<div class="resource"><div><b>Anthropic Trust Center</b><br><span>Security, privacy, compliance and trust documentation</span></div><a href="https://trust.anthropic.com/" target="_blank" rel="noopener">Open ↗</a></div>
+</div>
+<div id="res2" class="tabcontent card">
+<div class="resource"><div><b>Your Udemy course — FDE Interview Prep: 100 Q&A</b><br><span>Forward Deployed Engineer role, interview practice and preparation</span></div><a href="https://www.udemy.com/course/forward-deployed-engineer-fde-interview-prep-100-qa/?referralCode=9D9A9528B0CD0BF60D29" target="_blank" rel="noopener">Enroll / view ↗</a></div>
+<div class="resource"><div><b>DeepLearning.AI short courses</b><br><span>LLM application development, agents, evaluation and AI engineering topics</span></div><a href="https://www.deeplearning.ai/short-courses/" target="_blank" rel="noopener">Browse courses ↗</a></div>
+<div class="resource"><div><b>DeepLearning.AI — AI Agents in LangGraph</b><br><span>Agent orchestration and stateful workflows; transferable concepts for FDEs</span></div><a href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank" rel="noopener">Course ↗</a></div>
+<div class="resource"><div><b>Coursera — Generative AI learning catalog</b><br><span>Structured courses on generative AI, cloud and software engineering</span></div><a href="https://www.coursera.org/search?query=generative%20ai" target="_blank" rel="noopener">Browse ↗</a></div>
+<div class="resource"><div><b>Udemy — Claude / Anthropic courses</b><br><span>Search current instructor-led Claude API, Claude Code and agent courses</span></div><a href="https://www.udemy.com/courses/search/?q=Claude%20AI%20API" target="_blank" rel="noopener">Browse ↗</a></div>
+<div class="resource"><div><b>freeCodeCamp</b><br><span>Free programming, Python, APIs, databases and cloud tutorials</span></div><a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>FastAPI tutorial</b><br><span>Build robust Python APIs and service integrations</span></div><a href="https://fastapi.tiangolo.com/tutorial/" target="_blank" rel="noopener">Docs ↗</a></div>
+</div>
+<div id="res3" class="tabcontent card">
+<div class="resource"><div><b>Model Context Protocol specification</b><br><span>Protocol concepts, lifecycle, transports and authorization</span></div><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Open ↗</a></div>
+<div class="resource"><div><b>MCP official servers repository</b><br><span>Reference MCP servers and integration examples</span></div><a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">GitHub ↗</a></div>
+<div class="resource"><div><b>MCP Python SDK</b><br><span>Build MCP servers and clients in Python</span></div><a href="https://github.com/modelcontextprotocol/python-sdk" target="_blank" rel="noopener">GitHub ↗</a></div>
+<div class="resource"><div><b>MCP TypeScript SDK</b><br><span>Build MCP servers and clients in TypeScript</span></div><a href="https://github.com/modelcontextprotocol/typescript-sdk" target="_blank" rel="noopener">GitHub ↗</a></div>
+<div class="resource"><div><b>Anthropic — Building effective agents</b><br><span>Patterns for workflows, agents, tool use and system design</span></div><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Read ↗</a></div>
+<div class="resource"><div><b>Anthropic engineering articles</b><br><span>Research-to-production engineering, context and agent patterns</span></div><a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">Read ↗</a></div>
+<div class="resource"><div><b>LangChain Academy</b><br><span>Agent engineering and LangGraph learning paths</span></div><a href="https://academy.langchain.com/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>Microsoft AI Agents for Beginners</b><br><span>Open-source lessons covering agent fundamentals and patterns</span></div><a href="https://github.com/microsoft/ai-agents-for-beginners" target="_blank" rel="noopener">GitHub ↗</a></div>
+</div>
+<div id="res4" class="tabcontent card">
+<div class="resource"><div><b>AWS Skill Builder</b><br><span>Cloud architecture, IAM, networking, containers and operations</span></div><a href="https://skillbuilder.aws/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>AWS Generative AI learning</b><br><span>Generative AI, Bedrock and enterprise deployment learning</span></div><a href="https://aws.amazon.com/training/learn-about/generative-ai/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>Google Cloud Skills Boost</b><br><span>Cloud engineering, data, AI and production operations</span></div><a href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>Microsoft Learn — Azure AI</b><br><span>Azure AI services, identity, governance and deployment</span></div><a href="https://learn.microsoft.com/training/azure/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>Docker getting started</b><br><span>Containerize and run application services</span></div><a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>Kubernetes tutorials</b><br><span>Deploy, scale and operate containerized applications</span></div><a href="https://kubernetes.io/docs/tutorials/" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>Terraform tutorials</b><br><span>Infrastructure as code and repeatable environments</span></div><a href="https://developer.hashicorp.com/terraform/tutorials" target="_blank" rel="noopener">Learn ↗</a></div>
+<div class="resource"><div><b>OWASP GenAI Security Project</b><br><span>LLM application threats and mitigation guidance</span></div><a href="https://genai.owasp.org/" target="_blank" rel="noopener">Explore ↗</a></div>
+</div>
+<div id="res5" class="tabcontent card">
+<div class="resource"><div><b>Palantir — Forward Deployed Software Engineer</b><br><span>Understand the field-engineering model and customer deployment expectations</span></div><a href="https://www.palantir.com/careers/" target="_blank" rel="noopener">Careers ↗</a></div>
+<div class="resource"><div><b>OpenAI Careers</b><br><span>Explore Forward Deployed Engineering and applied AI roles</span></div><a href="https://openai.com/careers/" target="_blank" rel="noopener">Careers ↗</a></div>
+<div class="resource"><div><b>Anthropic Careers</b><br><span>Explore customer engineering, deployment, solutions and product roles</span></div><a href="https://www.anthropic.com/careers" target="_blank" rel="noopener">Careers ↗</a></div>
+<div class="resource"><div><b>System Design Primer</b><br><span>Open-source guide to scalable system design interview preparation</span></div><a href="https://github.com/donnemartin/system-design-primer" target="_blank" rel="noopener">GitHub ↗</a></div>
+<div class="resource"><div><b>Google SRE books</b><br><span>Reliability, monitoring, incident response and production operations</span></div><a href="https://sre.google/books/" target="_blank" rel="noopener">Read ↗</a></div>
+<div class="resource"><div><b>Designing Data-Intensive Applications</b><br><span>Distributed systems, data architecture and reliability foundations</span></div><a href="https://dataintensive.net/" target="_blank" rel="noopener">Book ↗</a></div>
+<div class="resource"><div><b>NeetCode</b><br><span>Practical coding interview preparation and patterns</span></div><a href="https://neetcode.io/" target="_blank" rel="noopener">Practice ↗</a></div>
+</div>
+<p class="muted" style="font-size:11px;margin-top:12px">Resource links are curated starting points, not endorsements. Course availability, pricing, syllabi and provider features can change. Confirm the current syllabus and prerequisites before enrolling.</p>
+</section>
+
+<section id="interview"><div class="section-head"><div><div class="kicker">11 / INTERVIEW PREPARATION</div><h2>Practice the FDE interview</h2><p>Be ready to reason through ambiguous customer scenarios, not just recite tools.</p></div></div>
+<div class="grid">
+<div class="card"><h3>Discovery scenario</h3><p>A bank wants Claude to reduce contact-center handling time. What do you ask before proposing an architecture?</p></div>
+<div class="card"><h3>Architecture scenario</h3><p>Design a Claude agent that reads Salesforce cases and approved knowledge, drafts a response and requests approval before sending.</p></div>
+<div class="card"><h3>Debugging scenario</h3><p>After launch, answer quality drops and p95 latency doubles. How do you isolate retrieval, model, tool and infrastructure causes?</p></div>
+<div class="card"><h3>Security scenario</h3><p>A retrieved document contains instructions to export confidential customer records. How does your system defend against this?</p></div>
+<div class="card"><h3>Deployment scenario</h3><p>The customer requires private networking, centralized identity and audit integration. What must be validated with the selected deployment provider?</p></div>
+<div class="card"><h3>Value scenario</h3><p>The demo is popular but users still complete the workflow manually. What metrics and product changes would you investigate?</p></div>
+</div></section>
+<div class="card" style="margin:28px 0 12px;padding:26px;background:linear-gradient(120deg,#26344c,#18243a)"><div class="kicker">THE FDE STANDARD</div><h2 style="margin:6px 0 8px">Discover deeply. Build pragmatically. Deploy responsibly. Prove value.</h2><p class="muted">A strong Claude FDE can translate a messy enterprise workflow into a secure, observable, maintainable AI capability—and stay accountable after launch.</p></div>
+</main>
+<footer><div class="wrap">Claude Enterprise FDE Academy • Independent learning resource • Product capabilities change; always verify current Anthropic documentation and customer contractual requirements before implementation.</div></footer>
+<script>
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{const section=btn.closest('section');section.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));section.querySelectorAll('.tabcontent').forEach(c=>c.classList.remove('active'));btn.classList.add('active');section.querySelector('#'+btn.dataset.tab).classList.add('active')}));
+function wireProgress(id,bar,count){const root=document.getElementById(id),checks=[...root.querySelectorAll('input')];function update(){let n=checks.filter(x=>x.checked).length;document.getElementById(bar).style.width=(n/checks.length*100)+'%';document.getElementById(count).textContent=n+' of '+checks.length+(id==='milestones'?' milestones':' complete')}checks.forEach(c=>c.addEventListener('change',update));update()}
+wireProgress('securityChecks','securityProgress','securityCount');wireProgress('milestones','milestoneProgress','milestoneCount');
+document.getElementById('grade').addEventListener('click',()=>{let score=0;document.querySelectorAll('.quizq').forEach((q,i)=>{let selected=q.querySelector('input:checked'),f=q.querySelector('.feedback');if(selected&&selected.value===q.dataset.answer){score++;f.textContent='Correct';f.style.color='var(--green)'}else{f.textContent='Not quite. Review the relevant architecture and governance section.';f.style.color='var(--yellow)'}});document.getElementById('quizResult').textContent='Your score: '+score+'/5'});
+document.getElementById('resetQuiz').addEventListener('click',()=>{document.querySelectorAll('.quizq input').forEach(x=>x.checked=false);document.querySelectorAll('.feedback').forEach(x=>x.textContent='');document.getElementById('quizResult').textContent=''});
+</script>
+</body></html>
